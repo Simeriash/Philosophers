@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 11:52:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/11 14:06:01 by julauren         ###   ########.fr       */
+/*   Created: 2026/02/11 13:10:55 by julauren          #+#    #+#             */
+/*   Updated: 2026/02/11 13:36:01 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#include "../philo.h"
 
-# include <stdlib.h>
-# include <limits.h>
-# include <stdio.h>
-
-typedef struct	s_data
+int	ft_isdigit(int c)
 {
-	int	nb_philo;
-	int	time_2_die;
-	int	time_2_eat;
-	int	time_2_sleep;
-	int	nb_times;
-}	t_data;
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
 
-int	ft_isdigit(int c);
-
-#endif

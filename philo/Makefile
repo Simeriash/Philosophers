@@ -6,7 +6,7 @@ CFLAGS := -Wall -Wextra -Werror -g # -fsanitize=address
 HEADER := philo.h
 
 
-SOURCES :=
+SOURCES := philo.c philo_utils.c
 
 SRC_DIR := src/
 SRC := $(addprefix $(SRC_DIR), $(SOURCES))
