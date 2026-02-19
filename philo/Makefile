@@ -19,7 +19,7 @@ OBJ := $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
 all : $(NAME)
 
 $(NAME) : $(OBJ_DIR) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $@
+	$(CC) $(CFLAGS) $(OBJ) -pthread -o $@
 
 $(OBJ_DIR) :
 	mkdir -p $(OBJ_DIR)

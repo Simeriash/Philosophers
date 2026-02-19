@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:41:04 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/11 14:06:23 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/19 15:59:02 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,4 @@ int	main(int ac, char **av)
 		return (0);
 	if (ft_init_input(&data, ac, av))
 		return (0);
-	printf("%d\t%d\t%d\t%d\t%d\n", data.nb_philo, data.time_2_die, data.time_2_eat, data.time_2_sleep, data.nb_times);
 }
