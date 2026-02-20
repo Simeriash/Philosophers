@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 10:33:53 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/20 10:36:25 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/20 12:21:12 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ static int	ft_atoi_philo(const char *str)
 	return (num);
 }
 
+static int	ft_no_time_2_lose(t_data *data)
+{
+	if (data->nb_philo == 0 || data->time_2_die == 0
+		|| (data->time_2_die < (data->time_2_eat + data->time_2_sleep))
+		|| data->time_2_die < data->time_2_eat
+		|| data->time_2_die < data->time_2_sleep)
+		return (1);
+	return (0);
+}
+
 int	ft_init_input(t_data *data, int ac, char **av)
 {
 	data->nb_philo = ft_atoi_philo(av[1]);
@@ -60,5 +70,7 @@ int	ft_init_input(t_data *data, int ac, char **av)
 	}
 	else
 		data->nb_times = 0;
+	if (ft_no_time_2_lose(data))
+		return (1);
 	return (0);
 }
