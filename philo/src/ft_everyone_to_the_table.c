@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:42:14 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/20 17:23:07 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/20 18:18:31 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_add_before(t_node *node, int val)
 	return (0);
 }
 
-static int	ft_add_after(t_node *node, int val)
+int	ft_add_after(t_node *node, int val)
 {
 	t_node	*new_node;
 

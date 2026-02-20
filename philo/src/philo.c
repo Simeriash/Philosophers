@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:41:04 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/20 17:23:48 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/20 18:21:09 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,5 @@ int	main(int ac, char **av)
 	table = ft_everyone_to_the_table(data.nb_philo);
 	if (!table)
 		return (0);
-	ft_browse(table);
-	ft_reverse_browse(table);
 	ft_free_table(table);
 }

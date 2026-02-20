@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 13:56:07 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/20 15:57:59 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/20 18:00:43 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,27 @@ void	ft_reverse_browse(t_node *table)
 		printf("%d\n", node->val);
 		node = node->previous;
 	}
+}
+
+void	ft_delete_node(t_node *node)
+{
+	node->previous->next = node->next;
+	node->next->previous = node->previous;
+	free(node);
+}
+
+t_node	*ft_node_chr(t_node *table, int val)
+{
+	t_node	*node;
+
+	node = table->next;
+	while (node != table)
+	{
+		if (node->val == val)
+			return (node);
+		node = node->next;
+	}
+	return (NULL);
 }
 
 void	ft_free_table(t_node *table)
