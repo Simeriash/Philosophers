@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:52:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/20 10:52:52 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/20 17:23:13 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@ typedef struct s_data
 	int	nb_times;
 }	t_data;
 
-int	ft_init_input(t_data *data, int ac, char **av);
+typedef struct s_node
+{
+	int	val;
+	struct s_node	*previous;
+	struct s_node	*next;
+}	t_node;
+
+int		ft_init_input(t_data *data, int ac, char **av);
+t_node 	*ft_everyone_to_the_table(int nb);
+void	ft_browse(t_node *table);
+void	ft_reverse_browse(t_node *table);
+void	ft_free_table(t_node *table);
 
 #endif
