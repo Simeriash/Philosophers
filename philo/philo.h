@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:52:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/20 18:24:19 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/21 13:04:40 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <limits.h>
 # include <stdio.h>
 # include <pthread.h>
+# include <string.h>
 
 typedef struct s_data
 {
@@ -27,9 +28,17 @@ typedef struct s_data
 	int	nb_times;
 }	t_data;
 
+typedef struct s_fork
+{
+	int				fork;
+	pthread_mutex_t	fork_mutex;
+}	t_fork;
+
 typedef struct s_node
 {
 	int				val;
+	pthread_t		thread;
+	struct s_fork	fork;
 	struct s_node	*previous;
 	struct s_node	*next;
 }	t_node;
