@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:42:14 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/20 18:24:44 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/21 10:49:28 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_node	*ft_create_table(void)
 	return (table);
 }
 
-int	ft_add_before(t_node *node, int val)
+/*int	ft_add_before(t_node *node, int val)
 {
 	t_node	*new_node;
 
@@ -37,9 +37,9 @@ int	ft_add_before(t_node *node, int val)
 	node->previous->next = new_node;
 	node->previous = new_node;
 	return (0);
-}
+}*/
 
-int	ft_add_after(t_node *node, int val)
+static int	ft_add_after(t_node *node, int val)
 {
 	t_node	*new_node;
 

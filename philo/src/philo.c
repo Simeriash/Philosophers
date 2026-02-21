@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:41:04 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/20 18:21:09 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/21 10:47:34 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 		return (0);
 	if (ft_init_input(&data, ac, av))
 		return (0);
-	printf("OK\n");
+	printf("OK\n");						/*		A EFFACER 	/!\		*/
 	table = ft_everyone_to_the_table(data.nb_philo);
 	if (!table)
 		return (0);
