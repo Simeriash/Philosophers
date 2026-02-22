@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:41:04 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/21 17:17:35 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/22 11:50:08 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,29 @@ static void	*ft_thread_routine(void *arg)
 	t_node	*node;
 
 	node = (t_node *)arg;
-	printf("Thread [%ld] - philo n⁰ %i\n", node->thread, node->val);
+	printf("Thread [%.15ld] - philo n⁰ %.3i\n", node->thread, node->val);
 	return (NULL);
 }
 
 static void	ft_thread(t_node *table, t_data *data)
 {
 	int		i;
+	int		j;
 	t_node	*node;
 
 	node = table->next;
 	i = 1;
 	while (i <= data->nb_philo)
 	{
-		pthread_create(&node->thread, NULL, &ft_thread_routine, node);
+		j = pthread_create(&node->thread, NULL, &ft_thread_routine, node);
+		node = node->next;
+		i++;
+	}
+	i = 1;
+	node = table->next;
+	while (i <= data->nb_philo)
+	{
+		pthread_join(node->thread, NULL);
 		node = node->next;
 		i++;
 	}
@@ -50,6 +59,5 @@ int	main(int ac, char **av)
 	if (!table)
 		return (0);
 	ft_thread(table, &data);
-	// thread join pour chaque thread
 	ft_free_table(table);
 }
