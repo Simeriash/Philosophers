@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:52:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/22 11:51:55 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/22 15:32:07 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <string.h>
+# include <sys/time.h>
 
 typedef struct s_data
 {
@@ -38,6 +39,8 @@ typedef struct s_node
 {
 	int				val;
 	pthread_t		thread;
+	long int		t0_sec;
+	long int		t0_usec;
 	struct s_fork	fork;
 	struct s_node	*previous;
 	struct s_node	*next;
