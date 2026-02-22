@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:41:04 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/22 11:50:08 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/22 13:50:18 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,17 @@ static void	*ft_thread_routine(void *arg)
 static void	ft_thread(t_node *table, t_data *data)
 {
 	int		i;
-	int		j;
+	int		thread;
 	t_node	*node;
 
 	node = table->next;
 	i = 1;
 	while (i <= data->nb_philo)
 	{
-		j = pthread_create(&node->thread, NULL, &ft_thread_routine, node);
+		thread = pthread_create(&node->thread, NULL, &ft_thread_routine, node);
 		node = node->next;
+		if (thread != 0)
+			break ;
 		i++;
 	}
 	i = 1;
