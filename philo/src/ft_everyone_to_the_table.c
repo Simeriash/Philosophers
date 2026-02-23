@@ -6,11 +6,40 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:42:14 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/23 09:13:43 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/23 09:42:40 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+t_node	*ft_node_chr(t_node *table, int val)
+{
+	t_node	*node;
+
+	node = table->next;
+	while (node != table)
+	{
+		if (node->val == val)
+			return (node);
+		node = node->next;
+	}
+	return (NULL);
+}
+
+void	ft_free_table(t_node *table)
+{
+	t_node	*node;
+	t_node	*tmp;
+
+	node = table->next;
+	while (node != table)
+	{
+		tmp = node->next;
+		free(node);
+		node = tmp;
+	}
+	free(table);
+}
 
 static t_node	*ft_create_table(void)
 {
@@ -27,21 +56,6 @@ static t_node	*ft_create_table(void)
 	table->next = table;
 	return (table);
 }
-
-/*int	ft_add_before(t_node *node, int val)
-{
-	t_node	*new_node;
-
-	new_node = malloc(sizeof(*new_node));
-	if (!new_node)
-		return (1);
-	new_node->val = val;
-	new_node->previous = node->previous;
-	new_node->next = node;
-	node->previous->next = new_node;
-	node->previous = new_node;
-	return (0);
-}*/
 
 static int	ft_add_after(t_node *node, int val)
 {

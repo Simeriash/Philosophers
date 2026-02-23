@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:41:04 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/23 09:28:47 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/23 09:44:02 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ static void	*ft_thread_routine(void *arg)
 
 	gettimeofday(&t0, 0);
 	node = (t_node *)arg;
-	printf("Thread [%.15ld] - philo n⁰ %.3i\t%.15ld\t%.15ld\n", node->thread, node->val, t0.tv_sec - node->t0_sec, t0.tv_usec - node->t0_usec);
+	printf("Thread [%.15ld] - philo n⁰ %.3i\t%.15ld\t%.15ld\n",
+		node->thread, node->val, t0.tv_sec - node->t0_sec,
+		t0.tv_usec - node->t0_usec);
 	return (NULL);
 }
 
@@ -60,7 +62,6 @@ int	main(int ac, char **av)
 		return (0);
 	if (ft_init_input(&data, ac, av))
 		return (0);
-	printf("OK\n");						/*		A EFFACER 	/!\		*/
 	table = ft_everyone_to_the_table(data.nb_philo);
 	if (!table)
 		return (0);
