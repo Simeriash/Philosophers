@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:42:14 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/23 09:42:40 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:29:35 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_free_table(t_node *table)
 	free(table);
 }
 
-static t_node	*ft_create_table(void)
+static t_node	*ft_create_table(t_data *data)
 {
 	t_node	*table;
 
@@ -49,6 +49,7 @@ static t_node	*ft_create_table(void)
 	if (!table)
 		return (NULL);
 	table->val = 0;
+	table->data = data;
 	table->thread = 0;
 	table->fork.fork = 0;
 	memset(&table->fork.fork_mutex, 0, sizeof(pthread_mutex_t));
@@ -57,7 +58,7 @@ static t_node	*ft_create_table(void)
 	return (table);
 }
 
-static int	ft_add_after(t_node *node, int val)
+static int	ft_add_after(t_node *node, t_data *data, int val)
 {
 	t_node	*new_node;
 
@@ -65,6 +66,7 @@ static int	ft_add_after(t_node *node, int val)
 	if (!new_node)
 		return (1);
 	new_node->val = val;
+	new_node->data = data;
 	new_node->thread = 0;
 	new_node->fork.fork = 0;
 	memset(&new_node->fork.fork_mutex, 0, sizeof(pthread_mutex_t));
@@ -75,20 +77,20 @@ static int	ft_add_after(t_node *node, int val)
 	return (0);
 }
 
-t_node	*ft_everyone_to_the_table(int nb)
+t_node	*ft_everyone_to_the_table(t_data *data)
 {
 	t_node	*table;
 	t_node	*node;
 	int		i;
 
-	table = ft_create_table();
+	table = ft_create_table(data);
 	if (!table)
 		return (NULL);
 	i = 1;
 	node = table->next;
-	while (i <= nb)
+	while (i <= data->nb_philo)
 	{
-		if (ft_add_after(node, i))
+		if (ft_add_after(node, data, i))
 		{
 			ft_free_table(table);
 			return (NULL);

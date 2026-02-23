@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:52:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/23 14:37:08 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:24:55 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@
 
 typedef struct s_data
 {
-	int	nb_philo;
-	int	time_2_die;
-	int	time_2_eat;
-	int	time_2_sleep;
-	int	nb_times;
+	int			nb_philo;
+	int			time_2_die;
+	int			time_2_eat;
+	int			time_2_sleep;
+	int			nb_times;
+	long int	t0_sec;
+	long int	t0_usec;
 }	t_data;
 
 typedef struct s_fork
@@ -39,15 +41,14 @@ typedef struct s_node
 {
 	int				val;
 	pthread_t		thread;
-	long int		t0_sec;
-	long int		t0_usec;
 	struct s_fork	fork;
 	struct s_node	*previous;
 	struct s_node	*next;
+	t_data			*data;
 }	t_node;
 
 int		ft_init_input(t_data *data, int ac, char **av);
-t_node	*ft_everyone_to_the_table(int nb);
+t_node	*ft_everyone_to_the_table(t_data *data);
 t_node	*ft_node_chr(t_node *table, int val);
 void	ft_free_table(t_node *table);
 
