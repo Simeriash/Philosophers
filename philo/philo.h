@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:52:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/23 09:44:46 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/23 14:37:08 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <pthread.h>
 # include <string.h>
 # include <sys/time.h>
-# include <unistd.h>
 
 typedef struct s_data
 {
