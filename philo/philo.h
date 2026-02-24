@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:52:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/23 17:24:55 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/24 12:56:18 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ typedef struct s_data
 	int			time_2_eat;
 	int			time_2_sleep;
 	int			nb_times;
-	long int	t0_sec;
-	long int	t0_usec;
 }	t_data;
 
 typedef struct s_fork
@@ -39,6 +37,8 @@ typedef struct s_fork
 
 typedef struct s_node
 {
+	long int		t0_sec;
+	long int		t0_usec;
 	int				val;
 	pthread_t		thread;
 	struct s_fork	fork;

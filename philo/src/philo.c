@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:41:04 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/23 17:30:08 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/24 12:56:31 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,30 @@ static void	*ft_thread_routine(void *arg)
 	gettimeofday(&t0, 0);
 	node = (t_node *)arg;
 	printf("Thread [%.15ld] - philo n⁰ %.3i\t%.15ld\t%.15ld\n",
-		node->thread, node->val, t0.tv_sec - node->data->t0_sec,
-		t0.tv_usec - node->data->t0_usec);
+		node->thread, node->val, t0.tv_sec - node->t0_sec,
+		t0.tv_usec - node->t0_usec);
 	return (NULL);
 }
 
 static void	ft_thread(t_node *table)
 {
-	int				i;
 	int				thread;
 	t_node			*node;
 	struct timeval	t0;
 
 	gettimeofday(&t0, 0);
 	node = table->next;
-	i = 0;
-	while (++i <= node->data->nb_philo)
+	while (node != table)
 	{
-		node->data->t0_sec = t0.tv_sec;
-		node->data->t0_usec = t0.tv_usec;
+		node->t0_sec = t0.tv_sec;
+		node->t0_usec = t0.tv_usec;
 		thread = pthread_create(&node->thread, NULL, &ft_thread_routine, node);
 		node = node->next;
 		if (thread != 0)
 			break ;
 	}
-	i = 0;
 	node = table->next;
-	while (++i <= node->data->nb_philo)
+	while (node != table)
 	{
 		pthread_join(node->thread, NULL);
 		node = node->next;
