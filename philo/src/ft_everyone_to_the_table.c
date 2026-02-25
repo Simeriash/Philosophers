@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:42:14 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/23 17:29:35 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/25 15:38:40 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static t_node	*ft_create_table(t_data *data)
 	table->data = data;
 	table->thread = 0;
 	table->fork.fork = 0;
-	memset(&table->fork.fork_mutex, 0, sizeof(pthread_mutex_t));
-	table->previous = table;
+	memset(&table->fork.fork_mut, 0, sizeof(pthread_mutex_t));
+	table->prev = table;
 	table->next = table;
 	return (table);
 }
@@ -69,10 +69,10 @@ static int	ft_add_after(t_node *node, t_data *data, int val)
 	new_node->data = data;
 	new_node->thread = 0;
 	new_node->fork.fork = 0;
-	memset(&new_node->fork.fork_mutex, 0, sizeof(pthread_mutex_t));
-	new_node->previous = node;
+	memset(&new_node->fork.fork_mut, 0, sizeof(pthread_mutex_t));
+	new_node->prev = node;
 	new_node->next = node->next;
-	node->next->previous = new_node;
+	node->next->prev = new_node;
 	node->next = new_node;
 	return (0);
 }

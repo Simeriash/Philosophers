@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:52:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/24 12:56:18 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/25 15:44:44 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <pthread.h>
 # include <string.h>
 # include <sys/time.h>
+# include <unistd.h>
 
 typedef struct s_data
 {
@@ -32,7 +33,7 @@ typedef struct s_data
 typedef struct s_fork
 {
 	int				fork;
-	pthread_mutex_t	fork_mutex;
+	pthread_mutex_t	fork_mut;
 }	t_fork;
 
 typedef struct s_node
@@ -42,7 +43,7 @@ typedef struct s_node
 	int				val;
 	pthread_t		thread;
 	struct s_fork	fork;
-	struct s_node	*previous;
+	struct s_node	*prev;
 	struct s_node	*next;
 	t_data			*data;
 }	t_node;
