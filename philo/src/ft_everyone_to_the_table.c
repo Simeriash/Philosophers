@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:42:14 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/27 11:28:16 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/27 14:35:10 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ static int	ft_add_after(t_node *node, t_data *data, int val)
 	new_node->val = val;
 	new_node->data = data;
 	new_node->thread = 0;
+	new_node->ungry = 0;
+	new_node->eat = 0;
 	memset(&new_node->fork, 0, sizeof(pthread_mutex_t));
 	new_node->prev = node;
 	new_node->next = node->next;

@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:52:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/27 11:36:14 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/27 15:30:48 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct s_node
 {
 	long int		t0_sec;
 	long int		t0_usec;
+	long int		ungry;
+	int				eat;
 	int				val;
 	pthread_t		thread;
 	pthread_mutex_t	fork;

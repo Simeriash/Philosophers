@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:41:04 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/27 13:30:52 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/27 15:29:58 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ static int	ft_truman_show(t_node *table)
 	{
 		node->t0_sec = t0.tv_sec;
 		node->t0_usec = t0.tv_usec;
-		// if (i != 5)
-			thread = pthread_create(&node->thread, NULL, &ft_thread_routine, node);
-		// else
-		// 	thread = 1;
+		thread = pthread_create(&node->thread, NULL, &ft_thread_routine, node);
 		node = node->next;
 		if (thread != 0)
 			break ;
