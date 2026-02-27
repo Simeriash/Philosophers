@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 11:32:17 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/27 12:26:36 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/27 12:47:48 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,24 @@ void	*ft_thread_routine(void *arg)
 	long int	t;
 
 	node = (t_node *)arg;
-	pthread_mutex_lock(&node->fork);
-	if (node->val != 1)
-		pthread_mutex_lock(&node->prev->fork);
-	else
-		pthread_mutex_lock(&node->prev->prev->fork);
-	t = ft_time(node);
-	ft_message(t, node->val, 0);
-	ft_message(t, node->val, 1);
-	usleep(node->data->time_2_eat * 1000);
-	if (node->val != 1)
-		pthread_mutex_unlock(&node->prev->fork);
-	else
-		pthread_mutex_unlock(&node->prev->prev->fork);
-	pthread_mutex_unlock(&node->fork);
-	t = ft_time(node);
-	ft_message(t, node->val, 2);
+	// while (node->data->nb_philo)
+	{
+		pthread_mutex_lock(&node->fork);
+		if (node->val != 1)
+			pthread_mutex_lock(&node->prev->fork);
+		else
+			pthread_mutex_lock(&node->prev->prev->fork);
+		t = ft_time(node);
+		ft_message(t, node->val, 0);
+		ft_message(t, node->val, 1);
+		usleep(node->data->time_2_eat * 1000);
+		if (node->val != 1)
+			pthread_mutex_unlock(&node->prev->fork);
+		else
+			pthread_mutex_unlock(&node->prev->prev->fork);
+		pthread_mutex_unlock(&node->fork);
+		t = ft_time(node);
+		ft_message(t, node->val, 2);
+	}
 	return (NULL);
 }

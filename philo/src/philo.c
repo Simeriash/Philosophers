@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:41:04 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/27 11:50:06 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/27 13:30:52 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,29 +38,47 @@ static void	ft_destroy_mutex(t_node *table)
 	}
 }
 
-static void	ft_thread(t_node *table)
+static int	ft_truman_show(t_node *table)
 {
 	int				thread;
 	t_node			*node;
 	struct timeval	t0;
+	int				i;
 
 	gettimeofday(&t0, 0);
 	ft_init_mutex(table);
 	node = table->next;
+	i = 0;
 	while (node != table)
 	{
 		node->t0_sec = t0.tv_sec;
 		node->t0_usec = t0.tv_usec;
-		thread = pthread_create(&node->thread, NULL, &ft_thread_routine, node);
+		// if (i != 5)
+			thread = pthread_create(&node->thread, NULL, &ft_thread_routine, node);
+		// else
+		// 	thread = 1;
 		node = node->next;
 		if (thread != 0)
 			break ;
+		i++;
 	}
+	return (i);
+}
+
+static void	ft_thread(t_node *table)
+{
+	t_node	*node;
+	int		i;
+	int		j;
+
+	i = ft_truman_show(table);
 	node = table->next;
-	while (node != table)
+	j = 0;
+	while (j < i)
 	{
 		pthread_join(node->thread, NULL);
 		node = node->next;
+		j++;
 	}
 	ft_destroy_mutex(table);
 }
