@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 11:32:17 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/27 11:58:36 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/27 12:26:36 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,20 @@ static void	ft_message(long int t, int val, int msg_code)
 		printf("%ld | %i is died\n", t, val);
 }
 
+static long int	ft_time(t_node *node)
+{
+	long int		t;
+	struct timeval	t1;
+
+	gettimeofday(&t1, 0);
+	t = (t1.tv_sec - node->t0_sec) * 1000 + (t1.tv_usec - node->t0_usec) / 1000;
+	return (t);
+}
+
 void	*ft_thread_routine(void *arg)
 {
-	t_node			*node;
-	struct timeval	t1;
-	long int		t;
+	t_node		*node;
+	long int	t;
 
 	node = (t_node *)arg;
 	pthread_mutex_lock(&node->fork);
@@ -38,8 +47,7 @@ void	*ft_thread_routine(void *arg)
 		pthread_mutex_lock(&node->prev->fork);
 	else
 		pthread_mutex_lock(&node->prev->prev->fork);
-	gettimeofday(&t1, 0);
-	t = (t1.tv_sec - node->t0_sec) * 1000 + (t1.tv_usec - node->t0_usec) / 1000;
+	t = ft_time(node);
 	ft_message(t, node->val, 0);
 	ft_message(t, node->val, 1);
 	usleep(node->data->time_2_eat * 1000);
@@ -48,8 +56,7 @@ void	*ft_thread_routine(void *arg)
 	else
 		pthread_mutex_unlock(&node->prev->prev->fork);
 	pthread_mutex_unlock(&node->fork);
-	gettimeofday(&t1, 0);
-	t = (t1.tv_sec - node->t0_sec) * 1000 + (t1.tv_usec - node->t0_usec) / 1000;
+	t = ft_time(node);
 	ft_message(t, node->val, 2);
 	return (NULL);
 }
