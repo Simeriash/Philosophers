@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:41:04 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/27 15:29:58 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/27 16:23:10 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,21 @@ static int	ft_truman_show(t_node *table)
 	return (i);
 }
 
-static void	ft_thread(t_node *table)
+int	main(int ac, char **av)
 {
+	t_data	data;
+	t_node	*table;
 	t_node	*node;
 	int		i;
 	int		j;
 
+	if (ac < 5 || ac > 6)
+		return (0);
+	if (ft_init_input(&data, ac, av))
+		return (0);
+	table = ft_everyone_to_the_table(&data);
+	if (!table)
+		return (0);
 	i = ft_truman_show(table);
 	node = table->next;
 	j = 0;
@@ -78,20 +87,5 @@ static void	ft_thread(t_node *table)
 		j++;
 	}
 	ft_destroy_mutex(table);
-}
-
-int	main(int ac, char **av)
-{
-	t_data	data;
-	t_node	*table;
-
-	if (ac < 5 || ac > 6)
-		return (0);
-	if (ft_init_input(&data, ac, av))
-		return (0);
-	table = ft_everyone_to_the_table(&data);
-	if (!table)
-		return (0);
-	ft_thread(table);
 	ft_free_table(table);
 }
