@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:41:04 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/25 14:02:59 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/27 11:05:14 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,28 @@
 static void	*ft_thread_routine(void *arg)
 {
 	t_node			*node;
-	struct timeval	t0;
+	struct timeval	t1;
 	long int		t;
 
-	gettimeofday(&t0, 0);
 	node = (t_node *)arg;
-	t = (t0.tv_sec - node->t0_sec) * 1000 + (t0.tv_usec - node->t0_usec);
-	printf("Thread [%.15ld] - philo n⁰ %.3i\t%.15ld\n",
-		node->thread, node->val, t);
+	pthread_mutex_lock(&node->fork);
+	if (node->val != 1)
+		pthread_mutex_lock(&node->prev->fork);
+	else
+		pthread_mutex_lock(&node->prev->prev->fork);
+	gettimeofday(&t1, 0);
+	t = (t1.tv_sec - node->t0_sec) * 1000 + (t1.tv_usec - node->t0_usec) / 1000;
+	ft_message(t, node->val, 0);
+	ft_message(t, node->val, 1);
+	usleep(node->data->time_2_eat *1000);
+	if (node->val != 1)
+		pthread_mutex_unlock(&node->prev->fork);
+	else
+		pthread_mutex_unlock(&node->prev->prev->fork);
+	pthread_mutex_unlock(&node->fork);
+	gettimeofday(&t1, 0);
+	t = (t1.tv_sec - node->t0_sec) * 1000 + (t1.tv_usec - node->t0_usec) / 1000;
+	ft_message(t, node->val, 2);
 	return (NULL);
 }
 
@@ -50,9 +64,14 @@ static void	ft_thread(t_node *table)
 	node = table->next;
 	while (node != table)
 	{
+		pthread_mutex_init(&node->fork, NULL);
+		node = node->next;
+	}
+	node = table->next;
+	while (node != table)
+	{
 		node->t0_sec = t0.tv_sec;
 		node->t0_usec = t0.tv_usec;
-		pthread_mutex_init(&node->fork.fork_mutex, NULL);
 		thread = pthread_create(&node->thread, NULL, &ft_thread_routine, node);
 		node = node->next;
 		if (thread != 0)
@@ -61,8 +80,13 @@ static void	ft_thread(t_node *table)
 	node = table->next;
 	while (node != table)
 	{
-		pthread_mutex_destroy(&node->fork.fork_mutex);
 		pthread_join(node->thread, NULL);
+		node = node->next;
+	}
+	node = table->next;
+	while (node != table)
+	{
+		pthread_mutex_destroy(&node->fork);
 		node = node->next;
 	}
 }

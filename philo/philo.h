@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:52:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/25 15:44:44 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/27 11:04:04 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,13 @@ typedef struct s_data
 	int			nb_times;
 }	t_data;
 
-typedef struct s_fork
-{
-	int				fork;
-	pthread_mutex_t	fork_mut;
-}	t_fork;
-
 typedef struct s_node
 {
 	long int		t0_sec;
 	long int		t0_usec;
 	int				val;
 	pthread_t		thread;
-	struct s_fork	fork;
+	pthread_mutex_t	fork;
 	struct s_node	*prev;
 	struct s_node	*next;
 	t_data			*data;
