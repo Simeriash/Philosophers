@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:42:14 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/27 11:14:29 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/27 11:28:16 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static t_node	*ft_create_table(t_data *data)
 	table->data = data;
 	table->thread = 0;
 	memset(&table->fork, 0, sizeof(pthread_mutex_t));
+	memset(&table->data->philo, 0, sizeof(pthread_mutex_t));
 	table->prev = table;
 	table->next = table;
 	return (table);

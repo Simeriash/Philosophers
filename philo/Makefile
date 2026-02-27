@@ -6,7 +6,7 @@ CFLAGS := -Wall -Wextra -Werror -g  #-fsanitize=thread
 HEADER := philo.h
 
 
-SOURCES := philo.c ft_init_input.c ft_everyone_to_the_table.c
+SOURCES := philo.c ft_init_input.c ft_everyone_to_the_table.c ft_thread_routine.c
 
 SRC_DIR := src/
 SRC := $(addprefix $(SRC_DIR), $(SOURCES))
