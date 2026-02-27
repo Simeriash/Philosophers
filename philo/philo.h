@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:52:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/27 15:30:48 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/27 16:05:38 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_node
 int		ft_init_input(t_data *data, int ac, char **av);
 t_node	*ft_everyone_to_the_table(t_data *data);
 void	*ft_thread_routine(void *arg);
-t_node	*ft_node_chr(t_node *table, int val);
+void	ft_message(long int t, int val, int msg_code);
 void	ft_free_table(t_node *table);
 
 #endif

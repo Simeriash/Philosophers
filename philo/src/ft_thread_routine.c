@@ -6,25 +6,11 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 11:32:17 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/27 15:19:18 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/27 16:12:08 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-static void	ft_message(long int t, int val, int msg_code)
-{
-	if (msg_code == 0)
-		printf("%ld | %i has taken a fork\n", t, val);
-	else if (msg_code == 1)
-		printf("%ld | %i is eating\n", t, val);
-	else if (msg_code == 2)
-		printf("%ld | %i is sleeping\n", t, val);
-	else if (msg_code == 3)
-		printf("%ld | %i is thinking\n", t, val);
-	else if (msg_code == 4)
-		printf("%ld | %i is died\n", t, val);
-}
 
 static long int	ft_time(t_node *node)
 {
@@ -56,6 +42,37 @@ static int	ft_so_long_goodbye(t_node *node, long int t, int *routine)
 	return (i);
 }
 
+static void	ft_unlock_mutex(t_node *node)
+{
+	if (node->val != 1)
+		pthread_mutex_unlock(&node->prev->fork);
+	else
+		pthread_mutex_unlock(&node->prev->prev->fork);
+	pthread_mutex_unlock(&node->fork);
+}
+
+static int	ft_thread_next(t_node *node, long int t, int *routine)
+{
+	node->ungry = t;
+	ft_message(t, node->val, 0);
+	ft_message(t, node->val, 1);
+	usleep(node->data->time_2_eat * 1000);
+	ft_unlock_mutex(node);
+	(node->eat)++;
+	if (node->eat == node->data->nb_times)
+		return (1);
+	t = ft_time(node);
+	if (ft_so_long_goodbye(node, t, routine))
+		return (1);
+	ft_message(t, node->val, 2);
+	usleep(node->data->time_2_sleep * 1000);
+	t = ft_time(node);
+	if (ft_so_long_goodbye(node, t, routine))
+		return (1);
+	ft_message(t, node->val, 3);
+	return (0);
+}
+
 void	*ft_thread_routine(void *arg)
 {
 	t_node		*node;
@@ -74,34 +91,11 @@ void	*ft_thread_routine(void *arg)
 		t = ft_time(node);
 		if (ft_so_long_goodbye(node, t, &routine))
 		{
-			if (node->val != 1)
-				pthread_mutex_unlock(&node->prev->fork);
-			else
-				pthread_mutex_unlock(&node->prev->prev->fork);
-			pthread_mutex_unlock(&node->fork);
+			ft_unlock_mutex(node);
 			return (NULL);
 		}
-		node->ungry = t;
-		ft_message(t, node->val, 0);
-		ft_message(t, node->val, 1);
-		usleep(node->data->time_2_eat * 1000);
-		if (node->val != 1)
-			pthread_mutex_unlock(&node->prev->fork);
-		else
-			pthread_mutex_unlock(&node->prev->prev->fork);
-		pthread_mutex_unlock(&node->fork);
-		(node->eat)++;
-		if (node->eat == node->data->nb_times)
+		if (ft_thread_next(node, t, &routine))
 			return (NULL);
-		t = ft_time(node);
-		if (ft_so_long_goodbye(node, t, &routine))
-			return (NULL);
-		ft_message(t, node->val, 2);
-		usleep(node->data->time_2_sleep * 1000);
-		t = ft_time(node);
-		if (ft_so_long_goodbye(node, t, &routine))
-			return (NULL);
-		ft_message(t, node->val, 3);
 	}
 	return (NULL);
 }

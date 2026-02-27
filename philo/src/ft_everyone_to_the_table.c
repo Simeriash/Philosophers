@@ -6,24 +6,24 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:42:14 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/27 14:35:10 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/27 16:05:20 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-t_node	*ft_node_chr(t_node *table, int val)
+void	ft_message(long int t, int val, int msg_code)
 {
-	t_node	*node;
-
-	node = table->next;
-	while (node != table)
-	{
-		if (node->val == val)
-			return (node);
-		node = node->next;
-	}
-	return (NULL);
+	if (msg_code == 0)
+		printf("%ld | %i has taken a fork\n", t, val);
+	else if (msg_code == 1)
+		printf("%ld | %i is eating\n", t, val);
+	else if (msg_code == 2)
+		printf("%ld | %i is sleeping\n", t, val);
+	else if (msg_code == 3)
+		printf("%ld | %i is thinking\n", t, val);
+	else if (msg_code == 4)
+		printf("%ld | %i is died\n", t, val);
 }
 
 void	ft_free_table(t_node *table)
