@@ -2,8 +2,8 @@
 
 # **Description**
 
-> [!NOTE]
-> Section that clearly presents the project, including its goal and a brief overview.
+In this project, you will learn the basics of threading a process.
+You will learn how to create threads and explore the use of mutexes in order not to have *data race*.
 
 # **Instructions**
 
@@ -20,5 +20,6 @@ Your Programm must take this following arguments :
 
 # **Ressources**
 
-> [!NOTE]
-> Section listing classic references related to the topic (documentation, articles, tutorials, etc.), as well as a description of how AI was used — specifying for which tasks and which parts of the project.
+- Threads & mutex : https://www.codequoi.com/threads-mutex-et-programmation-concurrente-en-c/
+
+- liste circulaire doublement chaînées : http://sdz.tdct.org/sdz/les-listes-circulaires-doublement-chainees-en-c.html
