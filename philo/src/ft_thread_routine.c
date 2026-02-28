@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 11:32:17 by julauren          #+#    #+#             */
-/*   Updated: 2026/02/27 16:12:08 by julauren         ###   ########.fr       */
+/*   Updated: 2026/02/28 06:53:12 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ static int	ft_thread_next(t_node *node, long int t, int *routine)
 	ft_message(t, node->val, 1);
 	usleep(node->data->time_2_eat * 1000);
 	ft_unlock_mutex(node);
-	(node->eat)++;
-	if (node->eat == node->data->nb_times)
-		return (1);
 	t = ft_time(node);
 	if (ft_so_long_goodbye(node, t, routine))
+		return (1);
+	(node->eat)++;
+	if (node->eat == node->data->nb_times)
 		return (1);
 	ft_message(t, node->val, 2);
 	usleep(node->data->time_2_sleep * 1000);
