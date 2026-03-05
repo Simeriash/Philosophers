@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:04:43 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/05 10:51:00 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/05 11:53:18 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,20 @@ static void	destroy_mutex(t_fork *fork_list, t_data *data)
 	}
 }
 
-static t_fork	*create_fork_list(t_data data)
+static void	create_fork_list(t_data data, t_fork **fork_list, pthread_t **thread_list)
 {
-	t_fork	*fork_list;
 	int		i;
 
-	fork_list = malloc(sizeof(*fork_list) * data.nb_philo);
-	if (!fork_list)
-		return (NULL);
+	*fork_list = malloc(sizeof(**fork_list) * data.nb_philo);
+	if (!(*fork_list))
+		return ;
 	i = 0;
 	while (i < data.nb_philo)
 	{
-		fork_list[i].free = 0;
-		pthread_mutex_init(&fork_list[i].mutex, NULL);
+		(*fork_list)[i].free = 0;
+		pthread_mutex_init(&(*fork_list)[i].mutex, NULL);
 		i++;
 	}
-	return (fork_list);
 }
 
 static void	create_thread(t_data *data, t_fork *fork)
@@ -69,16 +67,17 @@ static void	create_thread(t_data *data, t_fork *fork)
 
 int	main(int ac, char **av)
 {
-	t_data			data;
-	t_fork			*fork_list;
+	t_data		data;
+	t_fork		*fork_list;
+	pthread_t	*thread_list;
 
 	if (ac < 5 || ac > 6)
 		return (1);
 	if (init_input(&data, ac, av))
 		return (1);
-	fork_list = create_fork_list(data);
-	if (!fork_list)
-		return (1);
+	create_fork_list(data, &fork_list, &thread_list);
+	// if (!fork_list)
+	// 	return (1);
 	create_thread(&data, fork_list);
 	destroy_mutex(fork_list, &data);
 	free(fork_list);
