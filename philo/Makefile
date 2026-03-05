@@ -1,0 +1,35 @@
+NAME := philo
+
+CC := cc
+CFLAGS := -Wall -Wextra -Werror -g
+
+
+SOURCES := philo.c init_input.c
+
+SRC_DIR := src/
+SRC := $(addprefix $(SRC_DIR), $(SOURCES))
+
+OBJ_DIR := obj/
+OBJ := $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
+
+.PHONY : all clean fclean re
+
+all : $(NAME)
+
+$(NAME) : $(OBJ_DIR) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -pthread -o $@
+
+$(OBJ_DIR) :
+	mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c
+	$(CC) $(CFLAGS) -I. -c $< -o $@
+
+clean :
+	rm -rf $(OBJ)
+	rm -rf $(OBJ_DIR)
+
+fclean : clean
+	rm -rf $(NAME)
+
+re : fclean all
