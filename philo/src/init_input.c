@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:06:43 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/05 08:18:14 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/05 16:50:46 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,34 @@ static int	ft_no_time_2_lose(t_data *data)
 	return (0);
 }
 
-int	init_input(t_data *data, int ac, char **av)
+t_data	*init_input(int ac, char **av)
 {
+	t_data	*data;
+
+	data = malloc(sizeof(*data));
 	data->nb_philo = ft_atoi_philo(av[1]);
 	if (data->nb_philo == -1)
-		return (1);
+		return (NULL);
 	data->time_2_die = ft_atoi_philo(av[2]);
 	if (data->time_2_die == -1)
-		return (1);
+		return (NULL);
 	data->time_2_eat = ft_atoi_philo(av[3]);
 	if (data->time_2_eat == -1)
-		return (1);
+		return (NULL);
 	data->time_2_sleep = ft_atoi_philo(av[4]);
 	if (data->time_2_sleep == -1)
-		return (1);
+		return (NULL);
 	if (ac == 6)
 	{
 		data->nb_times = ft_atoi_philo(av[5]);
 		if (data->nb_times == -1)
-			return (1);
+			return (NULL);
 	}
 	else
 		data->nb_times = -1;
 	if (ft_no_time_2_lose(data))
-		return (1);
+		return (NULL);
 	data->end = 1;
 	data->nb_meal = 0;
-	return (0);
+	return (data);
 }
