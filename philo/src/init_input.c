@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:06:43 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/05 07:54:04 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/05 08:18:14 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	ft_no_time_2_lose(t_data *data)
 	return (0);
 }
 
-int	ft_init_input(t_data *data, int ac, char **av)
+int	init_input(t_data *data, int ac, char **av)
 {
 	data->nb_philo = ft_atoi_philo(av[1]);
 	if (data->nb_philo == -1)
