@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:04:43 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/05 16:57:02 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/05 17:47:58 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,45 +26,46 @@ static void	destroy_mutex(t_fork *fork_list, t_data *data)
 	}
 }
 
-static t_fork	*create_fork_list(t_data *data)
+static int	create_fork_list(t_data *data, t_fork **fork_list)
 {
 	int		i;
-	t_fork	*fork_list;
 
-	fork_list = malloc(sizeof(*fork_list) * data->nb_philo);
-	if (!fork_list)
-		return (NULL);
+	*fork_list = malloc(sizeof(**fork_list) * data->nb_philo);
+	if (!(*fork_list))
+		return (1);
 	i = 0;
 	while (i < data->nb_philo)
 	{
-		fork_list[i].free = 0;
-		pthread_mutex_init(&(fork_list)[i].mutex, NULL);
+		(*fork_list)[i].free = 0;
+		pthread_mutex_init(&(*fork_list)[i].mutex, NULL);
 		i++;
 	}
-	return (fork_list);
+	return (0);
 }
 
-static t_philo	*create_philo_list(t_data *data)
+static int	create_philo_list(t_data *data, t_philo **philo_list)
 {
 	int		i;
-	t_philo	*philo_list;
 
-	philo_list = malloc(sizeof(*philo_list) * data->nb_philo);
-	if (!philo_list)
-		return (NULL);
+	*philo_list = malloc(sizeof(**philo_list) * data->nb_philo);
+	if (!(*philo_list))
+		return (1);
 	i = 0;
 	while (i < data->nb_philo)
 	{
-		philo_list[i].data = data;
+		(*philo_list)[i].data = data;
+		(*philo_list)[i].ungry = 0;
+		(*philo_list)[i].meal = 0;
+		(*philo_list)[i].number = i + 1;
 		i++;
 	}
-	return (philo_list);
+	return (0);
 }
 
 static void	create_thread(t_data *data, t_fork *fork, t_philo *philo_list)
 {
-	int		n;
-	int		i;
+	int				n;
+	int				i;
 	struct timeval	t0;
 
 	(void)fork;
@@ -74,10 +75,6 @@ static void	create_thread(t_data *data, t_fork *fork, t_philo *philo_list)
 	while (++i < n)
 	{
 		philo_list[i].t0 = t0;
-		philo_list[i].ungry = 0;
-		philo_list[i].meal = 0;
-		philo_list[i].number = i + 1;
-		// philo_list[i].data = data;
 		if (pthread_create(&philo_list[i].thread, NULL, &thread_routine, &philo_list[i]))
 			break ;
 	}
@@ -88,18 +85,15 @@ int	main(int ac, char **av)
 	t_data	*data;
 	t_fork	*fork_list;
 	t_philo	*philo_list;
-	int	i;
+	int		i;
 
 	if (ac < 5 || ac > 6)
 		return (1);
-	data = init_input(ac, av);
-	if (!data)
+	if (init_input(ac, av, &data))
 		return (1);
-	fork_list = create_fork_list(data);
-	if (!fork_list)
+	if (create_fork_list(data, &fork_list))
 		return (1);
-	philo_list = create_philo_list(data);
-	if (!philo_list)
+	if (create_philo_list(data, &philo_list))
 		return (1);
 	i = 0;
 	while (i < data->nb_philo)

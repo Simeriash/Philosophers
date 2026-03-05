@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:26:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/05 16:40:21 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/05 17:33:34 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_philo
 	t_data			*data;
 }	t_philo;
 
-t_data	*init_input(int ac, char **av);
+int		init_input(int ac, char **av, t_data **data);
 void	*thread_routine(void *arg);
 
 #endif
