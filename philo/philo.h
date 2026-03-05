@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:26:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/05 06:28:37 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/05 07:29:37 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,21 @@ typedef struct s_data
 	pthread_mutex_t	printf;
 }	t_data;
 
+typedef struct s_fork
+{
+	int				free;
+	pthread_mutex_t	mutex;
+}	t_fork;
+
 typedef struct s_philo
 {
-	long int		t0_sec;
-	long int		t0_usec;
-	long int		ungry;
-	int				meal;
-
-	t_data			*data;
+	long int	t0_sec;
+	long int	t0_usec;
+	long int	ungry;
+	int			meal;
+	t_fork		fork_1;
+	t_fork		fork_2;
+	t_data		*data;
 }	t_philo;
 
 int	init_input(t_data *data, int ac, char **av);
