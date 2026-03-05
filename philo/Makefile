@@ -4,7 +4,7 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror -g
 
 
-SOURCES := philo.c init_input.c
+SOURCES := philo.c init_input.c thread_routine.c
 
 SRC_DIR := src/
 SRC := $(addprefix $(SRC_DIR), $(SOURCES))
