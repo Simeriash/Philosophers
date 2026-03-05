@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:26:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/05 08:07:03 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/05 10:39:26 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,17 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	int			number;
-	long int	t0_sec;
-	long int	t0_usec;
-	long int	ungry;
-	int			meal;
-	t_fork		*fork_1;
-	t_fork		*fork_2;
-	t_data		*data;
+	int				number;
+	pthread_t		thread;
+	struct timeval	t0;
+	long int		ungry;
+	int				meal;
+	t_fork			*fork_1;
+	t_fork			*fork_2;
+	t_data			*data;
 }	t_philo;
 
-int	init_input(t_data *data, int ac, char **av);
+int		init_input(t_data *data, int ac, char **av);
+void	*thread_routine(void *arg);
 
 #endif
