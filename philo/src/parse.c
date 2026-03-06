@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_input.c                                       :+:      :+:    :+:   */
+/*   parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:06:43 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/05 18:04:41 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/06 15:32:44 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,30 @@ static int	ft_no_time_2_lose(t_data *data)
 		|| data->time_2_die < data->time_2_eat
 		|| data->time_2_die < data->time_2_sleep
 		|| data->nb_times == 0)
+	{
+		free(data);
 		return (1);
-	pthread_mutex_init(&data->data, NULL);
-	pthread_mutex_init(&data->printf, NULL);
+	}
 	return (0);
 }
 
-int	init_input(int ac, char **av, t_data **data)
+int	parse(int ac, char **av, t_data **data)
 {
 	*data = malloc(sizeof(**data));
 	if (!(*data))
 		return (1);
-	if (ft_atoi_philo(av[1], &(*data)->nb_philo))
-		return (1);
-	if (ft_atoi_philo(av[2], &(*data)->time_2_die))
-		return (1);
-	if (ft_atoi_philo(av[3], &(*data)->time_2_eat))
-		return (1);
-	if (ft_atoi_philo(av[4], &(*data)->time_2_sleep))
-		return (1);
-	if (ac == 6)
+	if (ft_atoi_philo(av[1], &(*data)->nb_philo)
+		|| ft_atoi_philo(av[2], &(*data)->time_2_die)
+		|| ft_atoi_philo(av[3], &(*data)->time_2_eat)
+		|| ft_atoi_philo(av[4], &(*data)->time_2_sleep))
 	{
-		if (ft_atoi_philo(av[5], &(*data)->nb_times))
-			return (1);
+		free(*data);
+		return (1);
+	}
+	if (ac == 6 && ft_atoi_philo(av[5], &(*data)->nb_times))
+	{
+		free(*data);
+		return (1);
 	}
 	else
 		(*data)->nb_times = -1;
@@ -74,5 +75,7 @@ int	init_input(int ac, char **av, t_data **data)
 		return (1);
 	(*data)->end = 1;
 	(*data)->nb_meal = 0;
+	pthread_mutex_init(&(*data)->data, NULL);
+	pthread_mutex_init(&(*data)->printf, NULL);
 	return (0);
 }
