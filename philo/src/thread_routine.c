@@ -6,31 +6,45 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 10:37:06 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/07 11:44:03 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/07 14:36:09 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-static long int	time_elapsed(struct timeval t0)
+void	message(pthread_mutex_t *mutex, long int t, int num, int code)
 {
-	struct timeval	t1;
-	long int		t;
-
-	gettimeofday(&t1, 0);
-	t = (t1.tv_sec - t0.tv_sec) * 1000 + (t1.tv_usec - t0.tv_usec) / 1000;
-	return (t);
+	pthread_mutex_lock(mutex);
+	if (code == 0)
+		printf("%ld | %i has taken a fork\n", t, num);
+	else if (code == 1)
+		printf("%ld | %i is eating\n", t, num);
+	else if (code == 2)
+		printf("%ld | %i is sleeping\n", t, num);
+	else if (code == 3)
+		printf("%ld | %i is thinking\n", t, num);
+	else if (code == 4)
+		printf("%ld | %i died\n", t, num);
+	pthread_mutex_unlock(mutex);
 }
 
 void	*thread_routine(void *arg)
 {
 	t_philo		*philo;
 	long int	t;
+	int			i;
 
 	philo = (t_philo *)arg;
-	pthread_mutex_lock(&philo->data->printf);
-	t = time_elapsed(philo->t0);
-	printf("%li\tphilo : %i\tthread : %ld\n", t, philo->number, philo->thread);
-	pthread_mutex_unlock(&philo->data->printf);
+	i = 1;
+	while (1)
+	{
+		while (i)
+			i = fork_grip(philo);
+		t = time_elapsed(philo->t0);
+		if (control_loop(philo, t))
+			return (NULL);
+		message(&philo->data->printf, t, philo->number, 0);
+		message(&philo->data->printf, t, philo->number, 0);
+	}
 	return (NULL);
 }
