@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:57:19 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/06 17:17:55 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/07 12:33:08 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,29 @@ static int	create_fork_list(t_data *data, t_fork **fork_list)
 	return (0);
 }
 
-static int	create_philo_list(t_data *data, t_philo **philo_list)
+ void	fork_choice(t_philo **philo, t_fork **fork_list, int i)
+{
+	if ((*philo)[i].number == 1)
+	{
+		(*philo)[i].fork_1 = fork_list[0];
+		(*philo)[i].fork_2 = fork_list[(*philo)[i].data->nb_philo - 1];
+	}
+	else
+	{
+		if ((*philo)[i].number % 2 == 0)
+		{
+			(*philo)[i].fork_1 = fork_list[(*philo)[i].number - 2];
+			(*philo)[i].fork_2 = fork_list[(*philo)[i].number - 1];
+		}
+		else
+		{
+			(*philo)[i].fork_1 = fork_list[(*philo)[i].number - 1];
+			(*philo)[i].fork_2 = fork_list[(*philo)[i].number - 2];
+		}
+	}
+}
+
+static int	create_philo_list(t_data *data, t_philo **philo_list, t_fork **fork)
 {
 	int		i;
 
@@ -43,6 +65,7 @@ static int	create_philo_list(t_data *data, t_philo **philo_list)
 		(*philo_list)[i].ungry = 0;
 		(*philo_list)[i].meal = 0;
 		(*philo_list)[i].number = i + 1;
+		fork_choice(philo_list, fork, i);
 		i++;
 	}
 	return (0);
@@ -51,7 +74,7 @@ static int	create_philo_list(t_data *data, t_philo **philo_list)
 int	init_struc(t_data *data, t_fork **fork_list, t_philo **philo_list)
 {
 	if (create_fork_list(data, fork_list)
-		|| create_philo_list(data, philo_list))
+		|| create_philo_list(data, philo_list, fork_list))
 	{
 		destroy_mutex(data, *fork_list);
 		free(data);
