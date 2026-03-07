@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:26:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/05 10:39:26 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/06 17:07:44 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ typedef struct s_philo
 	t_data			*data;
 }	t_philo;
 
-int		init_input(t_data *data, int ac, char **av);
+int		parse(int ac, char **av, t_data **data);
+int		init_struc(t_data *data, t_fork **fork_list, t_philo **philo_list);
+void	destroy_mutex(t_data *data, t_fork *fork_list);
 void	*thread_routine(void *arg);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 10:37:06 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/05 11:13:51 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/05 17:00:38 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void	*thread_routine(void *arg)
 	long int	t;
 
 	philo = (t_philo *)arg;
-	usleep(100);
-	t = time_elapsed(philo->t0);
+	usleep(1000);
 	pthread_mutex_lock(&philo->data->printf);
-	printf("%li\tphilo : %i\tthread : %li\n", t, philo->number, philo->thread);
+	t = time_elapsed(philo->t0);
+	printf("%li\tphilo : %i\tthread : %ld\n", t, philo->number, philo->thread);
 	pthread_mutex_unlock(&philo->data->printf);
 	return (NULL);
 }
