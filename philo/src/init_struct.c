@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:57:19 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/07 12:33:08 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/07 14:37:12 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	create_fork_list(t_data *data, t_fork **fork_list)
 	return (0);
 }
 
- void	fork_choice(t_philo **philo, t_fork **fork_list, int i)
+void	fork_choice(t_philo **philo, t_fork **fork_list, int i)
 {
 	if ((*philo)[i].number == 1)
 	{
