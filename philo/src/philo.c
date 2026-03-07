@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:04:43 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/07 11:43:56 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/07 12:41:50 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,12 @@ void	destroy_mutex(t_data *data, t_fork *fork_list)
 	}
 }
 
-static void	create_thread(t_data *data, t_fork *fork_list, t_philo *philo_list)
+static void	create_thread(t_data *data, t_philo *philo_list)
 {
 	int				n;
 	int				i;
 	struct timeval	t0;
 
-	(void)fork_list;
 	n = data->nb_philo;
 	i = -1;
 	gettimeofday(&t0, 0);
@@ -61,7 +60,7 @@ int	main(int ac, char **av)
 	if (ac < 5 || ac > 6 || parse(ac, av, &data)
 		|| init_struc(data, &fork_list, &philo_list))
 		return (1);
-	create_thread(data, fork_list, philo_list);
+	create_thread(data, philo_list);
 	i = 0;
 	while (i < data->nb_philo)
 	{
