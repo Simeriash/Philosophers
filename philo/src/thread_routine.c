@@ -6,15 +6,26 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 10:37:06 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/08 11:35:38 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/08 14:54:47 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
+long int	time_elapsed(struct timeval t0)
+{
+	struct timeval	t1;
+	long int		t;
+
+	gettimeofday(&t1, 0);
+	t = (t1.tv_sec - t0.tv_sec) * 1000 + (t1.tv_usec - t0.tv_usec) / 1000;
+	return (t);
+}
+
 void	message(pthread_mutex_t *mutex, long int t, int num, int code)
 {
 	pthread_mutex_lock(mutex);
+	usleep(50);
 	if (code == 0)
 		printf("%ld | %i has taken a fork\n", t, num);
 	else if (code == 1)
@@ -28,8 +39,21 @@ void	message(pthread_mutex_t *mutex, long int t, int num, int code)
 	pthread_mutex_unlock(mutex);
 }
 
+static void	one_philo(t_philo *philo)
+{
+	long int	t;
+
+	t = time_elapsed(philo->t0);
+	message(&philo->data->printf, t, philo->number, 0);
+	usleep(philo->data->time_2_die * 1000);
+	t = time_elapsed(philo->t0);
+	message(&philo->data->printf, t, philo->number, 4);
+}
+
 static int	next_routine(t_philo *philo, long int t)
 {
+	message(&philo->data->printf, t, philo->number, 0);
+	message(&philo->data->printf, t, philo->number, 0);
 	philo->ungry = t;
 	message(&philo->data->printf, t, philo->number, 1);
 	usleep(philo->data->time_2_eat * 1000);
@@ -54,6 +78,11 @@ void	*thread_routine(void *arg)
 	int			i;
 
 	philo = (t_philo *)arg;
+	if (philo->data->nb_philo == 1)
+	{
+		one_philo(philo);
+		return (NULL);
+	}
 	i = 1;
 	while (1)
 	{
@@ -65,8 +94,6 @@ void	*thread_routine(void *arg)
 				return (NULL);
 		}
 		i = 1;
-		message(&philo->data->printf, t, philo->number, 0);
-		message(&philo->data->printf, t, philo->number, 0);
 		if (next_routine(philo, t))
 			return (NULL);
 	}

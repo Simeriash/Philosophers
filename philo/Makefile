@@ -1,7 +1,7 @@
 NAME := philo
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -g #-fsanitize=thread
+CFLAGS := -Wall -Wextra -Werror -g
 
 
 SOURCES := philo.c parse.c init_struct.c thread_routine.c thread_utils.c
