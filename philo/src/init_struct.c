@@ -6,28 +6,11 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:57:19 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/08 10:00:56 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/08 17:40:21 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-static int	create_fork_list(t_data *data, t_fork **fork)
-{
-	int		i;
-
-	*fork = malloc(sizeof(**fork) * data->nb_philo);
-	if (!(*fork))
-		return (1);
-	i = 0;
-	while (i < data->nb_philo)
-	{
-		(*fork)[i].free = 0;
-		pthread_mutex_init(&(*fork)[i].mutex, NULL);
-		i++;
-	}
-	return (0);
-}
 
 void	fork_choice(t_philo *philo, t_fork *fork, int i)
 {
@@ -49,6 +32,23 @@ void	fork_choice(t_philo *philo, t_fork *fork, int i)
 			(philo)[i].fork_2 = &fork[(philo)[i].number - 2];
 		}
 	}
+}
+
+static int	create_fork_list(t_data *data, t_fork **fork)
+{
+	int		i;
+
+	*fork = malloc(sizeof(**fork) * data->nb_philo);
+	if (!(*fork))
+		return (1);
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		(*fork)[i].free = 0;
+		pthread_mutex_init(&(*fork)[i].mutex, NULL);
+		i++;
+	}
+	return (0);
 }
 
 static int	create_philo_list(t_data *data, t_philo **philo)

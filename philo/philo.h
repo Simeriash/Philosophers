@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:26:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/08 09:56:33 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/08 17:44:55 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,13 @@ typedef struct s_philo
 }	t_philo;
 
 int			parse(int ac, char **av, t_data **data);
-int			init_struc(t_data *data, t_fork **fork_list, t_philo **philo_list);
-void		fork_choice(t_philo *philo, t_fork *fork_list, int i);
-void		destroy_mutex(t_data *data, t_fork *fork_list);
+int			init_struc(t_data *data, t_fork **fork, t_philo **philo);
+void		fork_choice(t_philo *philo, t_fork *fork, int i);
+void		destroy_mutex(t_data *data, t_fork *fork);
 void		*thread_routine(void *arg);
 void		message(pthread_mutex_t *mutex, long int t, int num, int code);
-long int	time_elapsed(struct timeval t0);
-int			fork_grip(t_philo *philo);
-void		drop_the_forks(t_philo *philo);
+int			fork_grip(t_fork *fork_1, t_fork *fork_2);
+void		drop_the_forks(t_fork *fork_1, t_fork *fork_2);
 int			control_loop(t_philo *philo, long int t);
 
 #endif

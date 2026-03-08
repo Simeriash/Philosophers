@@ -6,13 +6,13 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:04:43 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/08 14:45:52 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/08 17:43:27 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	destroy_mutex(t_data *data, t_fork *fork_list)
+void	destroy_mutex(t_data *data, t_fork *fork)
 {
 	int	i;
 
@@ -22,11 +22,11 @@ void	destroy_mutex(t_data *data, t_fork *fork_list)
 		pthread_mutex_destroy(&data->printf);
 	}
 	i = 0;
-	if (fork_list)
+	if (fork)
 	{
 		while (i < data->nb_philo)
 		{
-			pthread_mutex_destroy(&fork_list[i].mutex);
+			pthread_mutex_destroy(&fork[i].mutex);
 			i++;
 		}
 	}

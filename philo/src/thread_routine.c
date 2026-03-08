@@ -6,13 +6,13 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 10:37:06 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/08 14:54:47 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/08 17:23:50 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-long int	time_elapsed(struct timeval t0)
+static long int	time_elapsed(struct timeval t0)
 {
 	struct timeval	t1;
 	long int		t;
@@ -60,7 +60,7 @@ static int	next_routine(t_philo *philo, long int t)
 	t = time_elapsed(philo->t0);
 	if (control_loop(philo, t))
 		return (1);
-	drop_the_forks(philo);
+	drop_the_forks(philo->fork_1, philo->fork_2);
 	(philo->meal)++;
 	message(&philo->data->printf, t, philo->number, 2);
 	usleep(philo->data->time_2_sleep * 1000);
@@ -88,7 +88,7 @@ void	*thread_routine(void *arg)
 	{
 		while (i)
 		{
-			i = fork_grip(philo);
+			i = fork_grip(philo->fork_1, philo->fork_2);
 			t = time_elapsed(philo->t0);
 			if (control_loop(philo, t))
 				return (NULL);
