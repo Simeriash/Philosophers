@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:36:37 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/08 11:53:50 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/08 13:43:02 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ long int	time_elapsed(struct timeval t0)
 int	fork_grip(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->fork_1->mutex);
+	usleep(100);
 	if (philo->fork_1->free == 0)
 	{
 		philo->fork_1->free = 1;
 		pthread_mutex_unlock(&philo->fork_1->mutex);
 		pthread_mutex_lock(&philo->fork_2->mutex);
+		usleep(100);
 		if (philo->fork_2->free == 0)
 		{
 			philo->fork_2->free = 1;
@@ -40,6 +42,7 @@ int	fork_grip(t_philo *philo)
 		{
 			pthread_mutex_unlock(&philo->fork_2->mutex);
 			pthread_mutex_lock(&philo->fork_1->mutex);
+			usleep(100);
 			philo->fork_1->free = 0;
 			pthread_mutex_unlock(&philo->fork_1->mutex);
 		}
@@ -52,9 +55,11 @@ int	fork_grip(t_philo *philo)
 void	drop_the_forks(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->fork_1->mutex);
+	usleep(100);
 	philo->fork_1->free = 0;
 	pthread_mutex_unlock(&philo->fork_1->mutex);
 	pthread_mutex_lock(&philo->fork_2->mutex);
+	usleep(100);
 	philo->fork_2->free = 0;
 	pthread_mutex_unlock(&philo->fork_2->mutex);
 }
@@ -79,6 +84,7 @@ int	control_loop(t_philo *philo, long int t)
 
 	i = 0;
 	pthread_mutex_lock(&philo->data->data);
+	usleep(100);
 	if (philo->data->end == 0)
 		i++;
 	else
