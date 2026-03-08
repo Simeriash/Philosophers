@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:36:37 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/07 14:32:19 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/08 11:53:50 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,5 @@ int	control_loop(t_philo *philo, long int t)
 			next_control(philo, &i);
 	}
 	pthread_mutex_unlock(&philo->data->data);
-	if (i)
-		drop_the_forks(philo);
 	return (i);
 }

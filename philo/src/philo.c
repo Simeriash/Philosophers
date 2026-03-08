@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:04:43 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/08 09:58:31 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/08 11:30:45 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	create_thread(t_data *data, t_philo *philo, t_fork *fork)
 		if (pthread_create(&philo[i].thread, NULL, &thread_routine,
 				&philo[i]))
 			break ;
+		usleep(500);
 	}
 }
 

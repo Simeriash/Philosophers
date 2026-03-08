@@ -64,10 +64,13 @@ int	parse(int ac, char **av, t_data **data)
 		free(*data);
 		return (1);
 	}
-	if (ac == 6 && ft_atoi_philo(av[5], &(*data)->nb_times))
+	if (ac == 6)
 	{
-		free(*data);
-		return (1);
+		if(ft_atoi_philo(av[5], &(*data)->nb_times))
+		{
+			free(*data);
+			return (1);
+		}
 	}
 	else
 		(*data)->nb_times = -1;

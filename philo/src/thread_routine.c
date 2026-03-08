@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 10:37:06 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/08 09:56:46 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/08 11:35:38 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,25 @@ void	message(pthread_mutex_t *mutex, long int t, int num, int code)
 	pthread_mutex_unlock(mutex);
 }
 
+static int	next_routine(t_philo *philo, long int t)
+{
+	philo->ungry = t;
+	message(&philo->data->printf, t, philo->number, 1);
+	usleep(philo->data->time_2_eat * 1000);
+	t = time_elapsed(philo->t0);
+	if (control_loop(philo, t))
+		return (1);
+	drop_the_forks(philo);
+	(philo->meal)++;
+	message(&philo->data->printf, t, philo->number, 2);
+	usleep(philo->data->time_2_sleep * 1000);
+	t = time_elapsed(philo->t0);
+	if (control_loop(philo, t))
+		return (1);
+	message(&philo->data->printf, t, philo->number, 3);
+	return (0);
+}
+
 void	*thread_routine(void *arg)
 {
 	t_philo		*philo;
@@ -39,14 +58,17 @@ void	*thread_routine(void *arg)
 	while (1)
 	{
 		while (i)
+		{
 			i = fork_grip(philo);
-		t = time_elapsed(philo->t0);
-		// if (control_loop(philo, t))
-		// 	return (NULL);
+			t = time_elapsed(philo->t0);
+			if (control_loop(philo, t))
+				return (NULL);
+		}
+		i = 1;
 		message(&philo->data->printf, t, philo->number, 0);
 		message(&philo->data->printf, t, philo->number, 0);
-		drop_the_forks(philo);
-		return (NULL);
+		if (next_routine(philo, t))
+			return (NULL);
 	}
 	return (NULL);
 }
