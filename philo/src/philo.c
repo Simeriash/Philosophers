@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:04:43 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/07 12:41:50 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/08 09:58:31 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	destroy_mutex(t_data *data, t_fork *fork_list)
 	}
 }
 
-static void	create_thread(t_data *data, t_philo *philo_list)
+static void	create_thread(t_data *data, t_philo *philo, t_fork *fork)
 {
 	int				n;
 	int				i;
@@ -40,12 +40,15 @@ static void	create_thread(t_data *data, t_philo *philo_list)
 
 	n = data->nb_philo;
 	i = -1;
+	while (++i < n)
+		fork_choice(philo, fork, i);
+	i = -1;
 	gettimeofday(&t0, 0);
 	while (++i < n)
 	{
-		philo_list[i].t0 = t0;
-		if (pthread_create(&philo_list[i].thread, NULL, &thread_routine,
-				&philo_list[i]))
+		philo[i].t0 = t0;
+		if (pthread_create(&philo[i].thread, NULL, &thread_routine,
+				&philo[i]))
 			break ;
 	}
 }
@@ -53,23 +56,23 @@ static void	create_thread(t_data *data, t_philo *philo_list)
 int	main(int ac, char **av)
 {
 	t_data	*data;
-	t_fork	*fork_list;
-	t_philo	*philo_list;
+	t_fork	*fork;
+	t_philo	*philo;
 	int		i;
 
 	if (ac < 5 || ac > 6 || parse(ac, av, &data)
-		|| init_struc(data, &fork_list, &philo_list))
+		|| init_struc(data, &fork, &philo))
 		return (1);
-	create_thread(data, philo_list);
+	create_thread(data, philo, fork);
 	i = 0;
 	while (i < data->nb_philo)
 	{
-		pthread_join(philo_list[i].thread, NULL);
+		pthread_join(philo[i].thread, NULL);
 		i++;
 	}
-	destroy_mutex(data, fork_list);
-	free(fork_list);
+	destroy_mutex(data, fork);
+	free(fork);
 	free(data);
-	free(philo_list);
+	free(philo);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 10:37:06 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/07 14:36:09 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/08 09:56:46 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ void	*thread_routine(void *arg)
 		while (i)
 			i = fork_grip(philo);
 		t = time_elapsed(philo->t0);
-		if (control_loop(philo, t))
-			return (NULL);
+		// if (control_loop(philo, t))
+		// 	return (NULL);
 		message(&philo->data->printf, t, philo->number, 0);
 		message(&philo->data->printf, t, philo->number, 0);
+		drop_the_forks(philo);
+		return (NULL);
 	}
 	return (NULL);
 }
