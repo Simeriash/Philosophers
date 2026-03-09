@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:57:19 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/08 17:40:21 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:31:50 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	fork_choice(t_philo *philo, t_fork *fork, int i)
 
 static int	create_fork_list(t_data *data, t_fork **fork)
 {
-	int		i;
+	int	i;
+	int	j;
 
 	*fork = malloc(sizeof(**fork) * data->nb_philo);
 	if (!(*fork))
@@ -45,7 +46,16 @@ static int	create_fork_list(t_data *data, t_fork **fork)
 	while (i < data->nb_philo)
 	{
 		(*fork)[i].free = 0;
-		pthread_mutex_init(&(*fork)[i].mutex, NULL);
+		if (pthread_mutex_init(&(*fork)[i].mutex, NULL))
+		{
+			j = 0;
+			while (j < i)
+			{
+				pthread_mutex_destroy(&(*fork)[i].mutex);
+				j++;
+				return (1);
+			}
+		}
 		i++;
 	}
 	return (0);

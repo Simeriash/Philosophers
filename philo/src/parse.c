@@ -44,10 +44,19 @@ static int	ft_no_time_2_lose(t_data *data)
 		free(data);
 		return (1);
 	}
+	if (pthread_mutex_init(&data->data, NULL))
+	{
+		free(data);
+		return (1);
+	}
+	if (pthread_mutex_init(&data->printf, NULL))
+	{
+		pthread_mutex_destroy(&data->data);
+		free(data);
+		return (1);
+	}
 	data->end = 1;
 	data->nb_meal = 0;
-	pthread_mutex_init(&data->data, NULL);
-	pthread_mutex_init(&data->printf, NULL);
 	return (0);
 }
 
