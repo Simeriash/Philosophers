@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:36:37 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/08 17:34:36 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/09 16:10:48 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,6 @@ int	fork_grip(t_fork *fork_1, t_fork *fork_2)
 	return (1);
 }
 
-void	drop_the_forks(t_fork *fork_1, t_fork *fork_2)
-{
-	pthread_mutex_lock(&fork_1->mutex);
-	usleep(50);
-	fork_1->free = 0;
-	pthread_mutex_unlock(&fork_1->mutex);
-	pthread_mutex_lock(&fork_2->mutex);
-	usleep(50);
-	fork_2->free = 0;
-	pthread_mutex_unlock(&fork_2->mutex);
-}
-
 static void	next_control(t_philo *philo, int *i)
 {
 	if (philo->meal == philo->data->nb_times)
@@ -71,7 +59,7 @@ static void	next_control(t_philo *philo, int *i)
 	}
 }
 
-int	control_loop(t_philo *philo, long int t)
+int	control(t_philo *philo, long int t)
 {
 	int	i;
 
@@ -82,7 +70,7 @@ int	control_loop(t_philo *philo, long int t)
 		i++;
 	else
 	{
-		if (t - philo->ungry > philo->data->time_2_die)
+		if (t - philo->hungry > philo->data->time_2_die)
 		{
 			philo->data->end = 0;
 			message(&philo->data->printf, t, philo->number, 4);
@@ -93,4 +81,20 @@ int	control_loop(t_philo *philo, long int t)
 	}
 	pthread_mutex_unlock(&philo->data->data);
 	return (i);
+}
+
+int	control_loop(t_philo *philo, int timer, long int *t)
+{
+	long int	t1;
+
+	t1 = *t;
+	while ((t1 - *t) < timer)
+	{
+		if (control(philo, t1))
+			return (1);
+		usleep(5000);
+		t1 = time_elapsed(philo->t0);
+	}
+	*t = t1;
+	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 10:37:06 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/08 17:23:50 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/09 16:01:40 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-static long int	time_elapsed(struct timeval t0)
+long int	time_elapsed(struct timeval t0)
 {
 	struct timeval	t1;
 	long int		t;
@@ -54,18 +54,14 @@ static int	next_routine(t_philo *philo, long int t)
 {
 	message(&philo->data->printf, t, philo->number, 0);
 	message(&philo->data->printf, t, philo->number, 0);
-	philo->ungry = t;
+	philo->hungry = t;
 	message(&philo->data->printf, t, philo->number, 1);
-	usleep(philo->data->time_2_eat * 1000);
-	t = time_elapsed(philo->t0);
-	if (control_loop(philo, t))
+	if (control_loop(philo, philo->data->time_2_eat, &t))
 		return (1);
 	drop_the_forks(philo->fork_1, philo->fork_2);
 	(philo->meal)++;
 	message(&philo->data->printf, t, philo->number, 2);
-	usleep(philo->data->time_2_sleep * 1000);
-	t = time_elapsed(philo->t0);
-	if (control_loop(philo, t))
+	if (control_loop(philo, philo->data->time_2_sleep, &t))
 		return (1);
 	message(&philo->data->printf, t, philo->number, 3);
 	return (0);
@@ -90,7 +86,7 @@ void	*thread_routine(void *arg)
 		{
 			i = fork_grip(philo->fork_1, philo->fork_2);
 			t = time_elapsed(philo->t0);
-			if (control_loop(philo, t))
+			if (control(philo, t))
 				return (NULL);
 		}
 		i = 1;

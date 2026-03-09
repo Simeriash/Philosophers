@@ -6,11 +6,23 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:04:43 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/09 11:17:30 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/09 16:10:44 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+void	drop_the_forks(t_fork *fork_1, t_fork *fork_2)
+{
+	pthread_mutex_lock(&fork_1->mutex);
+	usleep(50);
+	fork_1->free = 0;
+	pthread_mutex_unlock(&fork_1->mutex);
+	pthread_mutex_lock(&fork_2->mutex);
+	usleep(50);
+	fork_2->free = 0;
+	pthread_mutex_unlock(&fork_2->mutex);
+}
 
 void	destroy_mutex(t_data *data, t_fork *fork)
 {

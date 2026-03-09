@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:57:19 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/09 11:31:50 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:20:29 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	create_philo_list(t_data *data, t_philo **philo)
 	while (i < data->nb_philo)
 	{
 		(*philo)[i].data = data;
-		(*philo)[i].ungry = 0;
+		(*philo)[i].hungry = 0;
 		(*philo)[i].meal = 0;
 		(*philo)[i].number = i + 1;
 		i++;

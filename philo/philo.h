@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:26:28 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/08 17:44:55 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:46:44 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_philo
 	int				number;
 	pthread_t		thread;
 	struct timeval	t0;
-	long int		ungry;
+	long int		hungry;
 	int				meal;
 	t_fork			*fork_1;
 	t_fork			*fork_2;
@@ -58,8 +58,10 @@ void		fork_choice(t_philo *philo, t_fork *fork, int i);
 void		destroy_mutex(t_data *data, t_fork *fork);
 void		*thread_routine(void *arg);
 void		message(pthread_mutex_t *mutex, long int t, int num, int code);
+int			control(t_philo *philo, long int t);
+long int	time_elapsed(struct timeval t0);
+int			control_loop(t_philo *philo, int timer, long int *t);
 int			fork_grip(t_fork *fork_1, t_fork *fork_2);
 void		drop_the_forks(t_fork *fork_1, t_fork *fork_2);
-int			control_loop(t_philo *philo, long int t);
 
 #endif
