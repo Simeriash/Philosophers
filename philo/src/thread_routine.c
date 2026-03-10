@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 10:37:06 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/09 16:01:40 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/10 15:59:56 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,6 @@ long int	time_elapsed(struct timeval t0)
 	gettimeofday(&t1, 0);
 	t = (t1.tv_sec - t0.tv_sec) * 1000 + (t1.tv_usec - t0.tv_usec) / 1000;
 	return (t);
-}
-
-void	message(pthread_mutex_t *mutex, long int t, int num, int code)
-{
-	pthread_mutex_lock(mutex);
-	usleep(50);
-	if (code == 0)
-		printf("%ld | %i has taken a fork\n", t, num);
-	else if (code == 1)
-		printf("%ld | %i is eating\n", t, num);
-	else if (code == 2)
-		printf("%ld | %i is sleeping\n", t, num);
-	else if (code == 3)
-		printf("%ld | %i is thinking\n", t, num);
-	else if (code == 4)
-		printf("%ld | %i died\n", t, num);
-	pthread_mutex_unlock(mutex);
 }
 
 static void	one_philo(t_philo *philo)
@@ -79,17 +62,21 @@ void	*thread_routine(void *arg)
 		one_philo(philo);
 		return (NULL);
 	}
+	if (philo->number % 2 == 0)
+		usleep(1000);
 	i = 1;
 	while (1)
 	{
 		while (i)
 		{
+			if (i == 2)
+				usleep(250);
 			i = fork_grip(philo->fork_1, philo->fork_2);
 			t = time_elapsed(philo->t0);
 			if (control(philo, t))
 				return (NULL);
 		}
-		i = 1;
+		i = 2;
 		if (next_routine(philo, t))
 			return (NULL);
 	}

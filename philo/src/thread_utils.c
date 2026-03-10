@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:36:37 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/09 16:10:48 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/10 15:50:25 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	next_fork(t_fork *fork_1, t_fork *fork_2)
 {
 	pthread_mutex_unlock(&fork_2->mutex);
 	pthread_mutex_lock(&fork_1->mutex);
-	usleep(50);
+	usleep(20);
 	fork_1->free = 0;
 	pthread_mutex_unlock(&fork_1->mutex);
 }
@@ -24,13 +24,13 @@ static void	next_fork(t_fork *fork_1, t_fork *fork_2)
 int	fork_grip(t_fork *fork_1, t_fork *fork_2)
 {
 	pthread_mutex_lock(&fork_1->mutex);
-	usleep(50);
+	usleep(20);
 	if (fork_1->free == 0)
 	{
 		fork_1->free = 1;
 		pthread_mutex_unlock(&fork_1->mutex);
 		pthread_mutex_lock(&fork_2->mutex);
-		usleep(50);
+		usleep(20);
 		if (fork_2->free == 0)
 		{
 			fork_2->free = 1;
@@ -65,7 +65,7 @@ int	control(t_philo *philo, long int t)
 
 	i = 0;
 	pthread_mutex_lock(&philo->data->data);
-	usleep(50);
+	usleep(20);
 	if (philo->data->end == 0)
 		i++;
 	else
@@ -80,6 +80,8 @@ int	control(t_philo *philo, long int t)
 			next_control(philo, &i);
 	}
 	pthread_mutex_unlock(&philo->data->data);
+	if (i)
+		drop_the_forks(philo->fork_1, philo->fork_2);
 	return (i);
 }
 
@@ -92,7 +94,7 @@ int	control_loop(t_philo *philo, int timer, long int *t)
 	{
 		if (control(philo, t1))
 			return (1);
-		usleep(5000);
+		usleep(500);
 		t1 = time_elapsed(philo->t0);
 	}
 	*t = t1;

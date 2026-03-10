@@ -6,20 +6,36 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 06:04:43 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/09 16:10:44 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/10 15:34:49 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
+void	message(pthread_mutex_t *mutex, long int t, int num, int code)
+{
+	pthread_mutex_lock(mutex);
+	if (code == 0)
+		printf("%ld | %i has taken a fork\n", t, num);
+	else if (code == 1)
+		printf("%ld | %i is eating\n", t, num);
+	else if (code == 2)
+		printf("%ld | %i is sleeping\n", t, num);
+	else if (code == 3)
+		printf("%ld | %i is thinking\n", t, num);
+	else if (code == 4)
+		printf("%ld | %i died\n", t, num);
+	pthread_mutex_unlock(mutex);
+}
+
 void	drop_the_forks(t_fork *fork_1, t_fork *fork_2)
 {
 	pthread_mutex_lock(&fork_1->mutex);
-	usleep(50);
+	usleep(20);
 	fork_1->free = 0;
 	pthread_mutex_unlock(&fork_1->mutex);
 	pthread_mutex_lock(&fork_2->mutex);
-	usleep(50);
+	usleep(20);
 	fork_2->free = 0;
 	pthread_mutex_unlock(&fork_2->mutex);
 }
@@ -62,12 +78,10 @@ static int	create_thread(t_data *data, t_philo *philo, t_fork *fork)
 		if (pthread_create(&philo[i].thread, NULL, &thread_routine, &philo[i]))
 		{
 			pthread_mutex_lock(&philo->data->data);
-			usleep(50);
 			philo->data->end = 0;
 			pthread_mutex_unlock(&philo->data->data);
 			break ;
 		}
-		usleep(1000);
 	}
 	return (i);
 }
