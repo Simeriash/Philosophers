@@ -6,7 +6,7 @@
 /*   By: julauren <julauren@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 10:37:06 by julauren          #+#    #+#             */
-/*   Updated: 2026/03/10 15:59:56 by julauren         ###   ########.fr       */
+/*   Updated: 2026/03/21 10:47:49 by julauren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,29 @@ static void	one_philo(t_philo *philo)
 	message(&philo->data->printf, t, philo->number, 4);
 }
 
-static int	next_routine(t_philo *philo, long int t)
+static int	next_routine(t_philo *philo, long int *t, int *i)
 {
-	message(&philo->data->printf, t, philo->number, 0);
-	message(&philo->data->printf, t, philo->number, 0);
-	philo->hungry = t;
-	message(&philo->data->printf, t, philo->number, 1);
-	if (control_loop(philo, philo->data->time_2_eat, &t))
+	while (*i)
+	{
+		*i = fork_grip(philo->fork_1, philo->fork_2);
+		*t = time_elapsed(philo->t0);
+		if (control(philo, *t))
+			return (1);
+	}
+	*i = 1;
+	message(&philo->data->printf, *t, philo->number, 0);
+	message(&philo->data->printf, *t, philo->number, 0);
+	philo->hungry = *t;
+	message(&philo->data->printf, *t, philo->number, 1);
+	if (control_loop(philo, philo->data->time_2_eat, t))
 		return (1);
 	drop_the_forks(philo->fork_1, philo->fork_2);
 	(philo->meal)++;
-	message(&philo->data->printf, t, philo->number, 2);
-	if (control_loop(philo, philo->data->time_2_sleep, &t))
+	message(&philo->data->printf, *t, philo->number, 2);
+	if (control_loop(philo, philo->data->time_2_sleep, t))
 		return (1);
-	message(&philo->data->printf, t, philo->number, 3);
+	message(&philo->data->printf, *t, philo->number, 3);
+	usleep(500);
 	return (0);
 }
 
@@ -67,17 +76,7 @@ void	*thread_routine(void *arg)
 	i = 1;
 	while (1)
 	{
-		while (i)
-		{
-			if (i == 2)
-				usleep(250);
-			i = fork_grip(philo->fork_1, philo->fork_2);
-			t = time_elapsed(philo->t0);
-			if (control(philo, t))
-				return (NULL);
-		}
-		i = 2;
-		if (next_routine(philo, t))
+		if (next_routine(philo, &t, &i))
 			return (NULL);
 	}
 	return (NULL);
