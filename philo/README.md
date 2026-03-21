@@ -2,21 +2,20 @@
 
 # **Description**
 
-<!-- A CHANGER -->
-
-In this project, you will learn the basics of threading a process.
-You will learn how to create threads and explore the use of mutexes in order not to have *data race*.
+In this project, you will create a basic multithreaded processing system.
+This is a simulation of philosophers eating spaghetti.
+Incredible, isn't it ?
 
 # **Instructions**
 
-<!-- A CHANGER -->
+First, you need to run the makefile in your terminal with the make command. This will compile all your files into a single executable.
 
-Your Programm must take this following arguments :
+Your Programm must take this following arguments in this order separated by a space :
 - <u>number of philosophers</u> : the number of philosophers and also the number of forks.
 
 - <u>time to die</u> **(in milliseconds)** : if a philosopher has not started eating within *time_to_die* milliseconds since the start of their last meal or the start of the simulation, he dies.
 
-- <u>time to eat</u> **(in milliseconds)** : the time it takes for a philosopher to eat. During that time, they will need to hold two fork.
+- <u>time to eat</u> **(in milliseconds)** : the time it takes for a philosopher to eat.
 
 - <u>time to sleep</u> **(in milliseconds)** : the time a philosopher will spend sleeping.
 
@@ -25,5 +24,3 @@ Your Programm must take this following arguments :
 # **Ressources**
 
 - Threads & mutex : https://www.codequoi.com/threads-mutex-et-programmation-concurrente-en-c/
-
-- liste circulaire doublement chaînées : http://sdz.tdct.org/sdz/les-listes-circulaires-doublement-chainees-en-c.html
